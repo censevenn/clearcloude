@@ -78,5 +78,38 @@
                 .catch((error) => console.error("Ошибка:", error));
         });
     </script>
+    <script type="module">
+    // 1. Импортируем нужные функции из официальных библиотек Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // 2. Ваша конфигурация (скопирована из консоли)
+    const firebaseConfig = {
+        apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
+        authDomain: "clearcloude.firebaseapp.com",
+        projectId: "clearcloude",
+        storageBucket: "clearcloude.appspot.com",
+        messagingSenderId: "441353799530",
+        appId: "1:441353799530:web:bc87678c983966c473c713"
+    };
+
+    // 3. Инициализация
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // 4. Логика кнопки (находим кнопку по тегу <button> или добавим класс 'google-btn')
+    document.querySelector('button').addEventListener('click', () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log("Успешный вход:", result.user.displayName);
+                alert("Привет, " + result.user.displayName + "! Вы успешно вошли в Clearcloud.");
+            })
+            .catch((error) => {
+                console.error("Ошибка входа:", error);
+                alert("Ошибка при входе. Проверьте консоль браузера.");
+            });
+    });
+</script>
 </body>
 </html>
