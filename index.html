@@ -47,6 +47,23 @@
                 }
             }
         }
+        <script type="module">
+  // Импортируем Firebase SDK через CDN (это позволит не устанавливать NPM)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  
+  // Вставьте сюда ваши ключи из скриншота df2fc1.png
+  const firebaseConfig = {
+    apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
+    authDomain: "clearcloude.firebaseapp.com",
+    projectId: "clearcloude",
+    storageBucket: "clearcloude.appspot.com",
+    messagingSenderId: "441353799530",
+    appId: "1:441353799530:web:bc87678c983966c473c713"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  console.log("Clearcloud успешно подключен к облаку!");
+</script>
     </script>
 </head>
 <body class="bg-bg-dark text-white min-h-screen flex flex-col items-center p-6 md:p-12 selection:bg-white selection:text-black">
