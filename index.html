@@ -6,16 +6,13 @@
     <title>clearcloud | Ваши медиа без лишнего</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Подключаем шрифт, максимально похожий на "Schiffbauer" по духу — стильный serif */
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&display=swap');
 
-        /* Применяем шрифт к всему документу */
         body {
             font-family: 'Crimson Pro', serif;
             letter-spacing: -0.01em;
         }
 
-        /* Тонкая настройка скроллбара, чтобы он не портил дизайн */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -27,43 +24,24 @@
             border-radius: 3px;
         }
 
-        /* Эффект свечения при наведении на кнопки */
         .glow-on-hover:hover {
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
             transform: translateY(-1px);
         }
     </style>
     <script>
-        // Настройка цветов Tailwind, чтобы они соответствовали вашему дизайну
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'bg-dark': '#111111', // Очень темно-серый, почти черный, как в макете
-                        'btn-dark': '#1a1a1a', // Чуть светлее для кнопок
-                        'border-gray': '#333333', // Тонкие границы
-                        'text-muted': '#a1a1a1', // Приглушенный текст
+                        'bg-dark': '#111111',
+                        'btn-dark': '#1a1a1a',
+                        'border-gray': '#333333',
+                        'text-muted': '#a1a1a1',
                     }
                 }
             }
         }
-        <script type="module">
-  // Импортируем Firebase SDK через CDN (это позволит не устанавливать NPM)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  
-  // Вставьте сюда ваши ключи из скриншота df2fc1.png
-  const firebaseConfig = {
-    apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
-    authDomain: "clearcloude.firebaseapp.com",
-    projectId: "clearcloude",
-    storageBucket: "clearcloude.appspot.com",
-    messagingSenderId: "441353799530",
-    appId: "1:441353799530:web:bc87678c983966c473c713"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  console.log("Clearcloud успешно подключен к облаку!");
-</script>
     </script>
 </head>
 <body class="bg-bg-dark text-white min-h-screen flex flex-col items-center p-6 md:p-12 selection:bg-white selection:text-black">
@@ -94,7 +72,6 @@
         </p>
 
         <div class="w-full max-w-md space-y-5 mb-16">
-            
             <button class="w-full py-4 px-6 rounded-xl bg-white text-black text-lg font-semibold border border-white glow-on-hover transition-all duration-300 active:scale-[0.98]">
                 Загрузить медиа
             </button>
@@ -106,79 +83,42 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <button class="w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 flex items-center justify-center gap-3 text-white transition-all duration-300 hover:border-white/20 hover:bg-btn-dark glow-on-hover active:scale-[0.98]">
-                    <svg class="w-5 h-5 text-text-muted" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L8 14v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2V7h1c.55 0 1-.45 1-1V4.46c3.08.5 5.5 3.13 5.9 6.44l-.9 1.1z"></path></svg>
+                <button class="google-btn w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 flex items-center justify-center gap-3 text-white transition-all duration-300 hover:border-white/20 hover:bg-btn-dark glow-on-hover active:scale-[0.98]">
                     Подключить Google
                 </button>
                 <button class="w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 flex items-center justify-center gap-3 text-white transition-all duration-300 hover:border-white/20 hover:bg-btn-dark glow-on-hover active:scale-[0.98]">
-                    <svg class="w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                     С компьютера
                 </button>
             </div>
-
         </div>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 py-6 px-10 rounded-2xl border border-border-gray bg-btn-dark/30 text-sm text-text-muted mb-24 transition-all hover:bg-btn-dark/50">
-            <div class="flex items-center gap-3 transition-colors hover:text-white">
-                <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                Полная приватность
-            </div>
-            <div class="flex items-center gap-3 transition-colors hover:text-white">
-                <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                Без регистрации
-            </div>
-            <div class="flex items-center gap-3 transition-colors hover:text-white">
-                <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Навсегда бесплатно
-            </div>
+            <div class="flex items-center gap-3 transition-colors hover:text-white">Полная приватность</div>
+            <div class="flex items-center gap-3 transition-colors hover:text-white">Без регистрации</div>
+            <div class="flex items-center gap-3 transition-colors hover:text-white">Навсегда бесплатно</div>
         </div>
-
     </main>
-    <script type="module">
-  // Подключаем Firebase через официальные CDN-ссылки
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-
-  // Ваша конфигурация
-  const firebaseConfig = {
-    apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
-    authDomain: "clearcloude.firebaseapp.com",
-    projectId: "clearcloude",
-    storageBucket: "clearcloude.appspot.com", // Исправлено на правильный формат
-    messagingSenderId: "441353799530",
-    appId: "1:441353799530:web:bc87678c983966c473c713",
-    measurementId: "G-8QMZB1JK3Y"
-  };
-
-  // Инициализация
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const storage = getStorage(app);
-
-  console.log("Clearcloud успешно связался с облаком!");
-</script>
 
     <script type="module">
-  // Импортируем Firebase из их официального облачного хранилища (CDN)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-  import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
-  // Ваши ключи из проекта clearcloude
-  const firebaseConfig = {
-    apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
-    authDomain: "clearcloude.firebaseapp.com",
-    projectId: "clearcloude",
-    storageBucket: "clearcloude.appspot.com",
-    messagingSenderId: "441353799530",
-    appId: "1:441353799530:web:bc87678c983966c473c713"
-  };
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
+            authDomain: "clearcloude.firebaseapp.com",
+            projectId: "clearcloude",
+            storageBucket: "clearcloude.appspot.com",
+            messagingSenderId: "441353799530",
+            appId: "1:441353799530:web:bc87678c983966c473c713",
+            measurementId: "G-8QMZB1JK3Y"
+        };
 
-  // Инициализация
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const storage = getStorage(app);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
 
-  console.log("Clearcloud успешно подключен к облаку!");
-</script>
+        console.log("Clearcloud успешно подключен к облаку!");
+    </script>
+</body>
+</html>
