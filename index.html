@@ -117,3 +117,27 @@
         </div>
 
     </main>
+    <script type="module">
+  // Подключаем Firebase через официальные CDN-ссылки
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+  // Ваша конфигурация
+  const firebaseConfig = {
+    apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
+    authDomain: "clearcloude.firebaseapp.com",
+    projectId: "clearcloude",
+    storageBucket: "clearcloude.appspot.com", // Исправлено на правильный формат
+    messagingSenderId: "441353799530",
+    appId: "1:441353799530:web:bc87678c983966c473c713",
+    measurementId: "G-8QMZB1JK3Y"
+  };
+
+  // Инициализация
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const storage = getStorage(app);
+
+  console.log("Clearcloud успешно связался с облаком!");
+</script>
