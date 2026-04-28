@@ -72,6 +72,18 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
+    // Привязка к кнопке
+  document.querySelector('.google-btn').addEventListener('click', () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log("Успешный вход:", user.displayName);
+        alert("Привет, " + user.displayName + "!");
+      })
+      .catch((error) => {
+        console.error("Ошибка входа:", error);
+      });
+  });
     // Ждем загрузки всех элементов DOM
     window.addEventListener('DOMContentLoaded', () => {
         const googleBtn = document.querySelector('.google-btn');
