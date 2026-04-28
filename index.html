@@ -7,16 +7,76 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&display=swap');
-        body { font-family: 'Crimson Pro', serif; background-color: #111; color: white; }
-    </style>
-</head>
-<body class="flex flex-col items-center justify-center min-h-screen">
-    <h1 class="text-4xl font-bold">Clearcloud работает!</h1>
-    <p class="text-gray-400 mt-4">Если вы видите этот текст, значит, структура HTML в порядке.</p>
 
-<script type="module" src="script.js"></script>
-<button class="google-btn bg-white text-black py-2 px-4 rounded-lg mt-5">
-    Подключить Google
-</button>
+        body {
+            font-family: 'Crimson Pro', serif;
+            background-color: #111;
+            color: white;
+            letter-spacing: -0.01em;
+        }
+
+        .glow-on-hover:hover {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-dark': '#111111',
+                        'btn-dark': '#1a1a1a',
+                        'border-gray': '#333333',
+                        'text-muted': '#a1a1a1',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-bg-dark text-white min-h-screen flex flex-col items-center p-6">
+
+    <header class="w-full max-w-7xl flex items-center justify-center mb-16">
+        <span class="text-3xl font-semibold">clearcloud</span>
+    </header>
+
+    <main class="w-full max-w-3xl text-center flex flex-col items-center">
+        <h1 class="text-5xl font-medium mb-8">Ваши медиа без лишнего</h1>
+        
+        <div class="w-full max-w-md space-y-5">
+            <button class="w-full py-4 rounded-xl bg-white text-black font-semibold glow-on-hover">
+                Загрузить медиа
+            </button>
+            
+            <button class="google-btn w-full py-3.5 rounded-xl border border-border-gray bg-btn-dark hover:bg-black transition-all">
+                Подключить Google
+            </button>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
+            authDomain: "clearcloude.firebaseapp.com",
+            projectId: "clearcloude",
+            storageBucket: "clearcloude.appspot.com",
+            messagingSenderId: "441353799530",
+            appId: "1:441353799530:web:bc87678c983966c473c713"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        document.querySelector('.google-btn').addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+                .then((result) => alert("Успешный вход: " + result.user.displayName))
+                .catch((error) => console.error("Ошибка:", error));
+        });
+    </script>
 </body>
 </html>
