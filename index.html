@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>clearcloud | Ваши медиа без лишнего</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&display=swap');
@@ -13,6 +14,7 @@
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
         .glow-on-hover:hover { box-shadow: 0 0 15px rgba(255, 255, 255, 0.15); transform: translateY(-1px); }
     </style>
+
     <script>
         tailwind.config = {
             theme: {
@@ -32,7 +34,9 @@
 
     <header class="w-full max-w-7xl flex items-center justify-center mb-16 md:mb-24">
         <div class="flex items-center gap-3">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+            </svg>
             <span class="text-3xl font-semibold tracking-tight">clearcloud</span>
         </div>
     </header>
@@ -42,64 +46,144 @@
             <span class="w-2 h-2 rounded-full bg-green-400"></span> Бесплатно • Анонимно • Приватно
         </div>
 
-        <h1 class="text-5xl md:text-6xl font-medium leading-tight tracking-tighter mb-8">Ваши медиа <br> без лишнего</h1>
-        <p class="text-xl text-text-muted leading-relaxed mb-16 font-light">Освободите память телефона. Храните фото и видео <br class="hidden md:block"> в личном облаке — без подписки и без слежки.</p>
+        <h1 class="text-5xl md:text-6xl font-medium leading-tight tracking-tighter mb-8">
+            Ваши медиа <br> без лишнего
+        </h1>
+        <p class="text-xl text-text-muted leading-relaxed mb-16 font-light">
+            Освободите память телефона. Храните фото и видео <br class="hidden md:block"> 
+            в личном облаке — без подписки и без слежки.
+        </p>
 
         <div class="w-full max-w-md space-y-5">
-            <button class="w-full py-4 px-6 rounded-xl bg-white text-black text-lg font-semibold glow-on-hover transition-all">Загрузить медиа</button>
-            <div class="relative flex py-3 items-center"><div class="flex-grow border-t border-border-gray/70"></div><span class="mx-4 text-sm text-border-gray">или</span><div class="flex-grow border-t border-border-gray/70"></div></div>
+            <input type="file" id="fileInput" class="hidden" accept="image/*,video/*">
+            
+            <button id="uploadBtn" class="w-full py-4 px-6 rounded-xl bg-white text-black text-lg font-semibold glow-on-hover transition-all">
+                Загрузить медиа
+            </button>
+
+            <div class="relative flex py-3 items-center">
+                <div class="flex-grow border-t border-border-gray/70"></div>
+                <span class="mx-4 text-sm text-border-gray">или</span>
+                <div class="flex-grow border-t border-border-gray/70"></div>
+            </div>
+
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <button class="google-btn w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 hover:bg-btn-dark transition-all glow-on-hover">Подключить Google</button>
-                <button class="w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 hover:bg-btn-dark transition-all glow-on-hover">С компьютера</button>
+                <button class="google-btn w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 hover:bg-btn-dark transition-all glow-on-hover">
+                    Подключить Google
+                </button>
+                <button class="w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 hover:bg-btn-dark transition-all glow-on-hover">
+                    С компьютера
+                </button>
             </div>
         </div>
     </main>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
-        authDomain: "clearcloude.firebaseapp.com",
-        projectId: "clearcloude",
-        storageBucket: "clearcloude.appspot.com",
-        messagingSenderId: "441353799530",
-        appId: "1:441353799530:web:bc87678c983966c473c713"
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7xpDntHKOobPAnsLkx5VMyCCzQbVMGnM",
+            authDomain: "clearcloude.firebaseapp.com",
+            projectId: "clearcloude",
+            storageBucket: "clearcloude.appspot.com",
+            messagingSenderId: "441353799530",
+            appId: "1:441353799530:web:bc87678c983966c473c713"
+        };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+        // Инициализация
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+        const provider = new GoogleAuthProvider();
 
-    // Привязка к кнопке
-  document.querySelector('.google-btn').addEventListener('click', () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        console.log("Успешный вход:", user.displayName);
-        alert("Привет, " + user.displayName + "!");
-      })
-      .catch((error) => {
-        console.error("Ошибка входа:", error);
-      });
-  });
-    // Ждем загрузки всех элементов DOM
-    window.addEventListener('DOMContentLoaded', () => {
+        let currentUser = null;
+
+        // Элементы интерфейса
         const googleBtn = document.querySelector('.google-btn');
-        if (googleBtn) {
-            googleBtn.addEventListener('click', () => {
-                signInWithPopup(auth, provider)
-                    .then((result) => alert("Успешно: " + result.user.displayName))
-                    .catch((err) => console.error("Ошибка Firebase:", err));
-            });
-        } else {
-            console.error("Кнопка .google-btn не найдена на странице");
-        }
-    });
-</script>
-    <input type="file" id="fileInput" class="hidden" accept="image/*,video/*">
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
 
-<button id="uploadBtn" class="w-full py-4 px-6 rounded-xl bg-white text-black text-lg font-semibold glow-on-hover transition-all">
-    Загрузить медиа
-</button>
+        // Мониторинг состояния входа
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                googleBtn.innerText = "Аккаунт: " + user.displayName.split(' ')[0];
+                console.log("Пользователь вошел:", user.email);
+            } else {
+                googleBtn.innerText = "Подключить Google";
+            }
+        });
+
+        // ЛОГИКА: Авторизация
+        googleBtn.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+                .then((result) => console.log("Успех:", result.user.displayName))
+                .catch((err) => {
+                    console.error("Ошибка входа:", err);
+                    alert("Ошибка входа: " + err.message);
+                });
+        });
+
+        // ЛОГИКА: Выбор файла
+        uploadBtn.addEventListener('click', () => {
+            if (!currentUser) {
+                alert("Пожалуйста, сначала подключите Google!");
+                return;
+            }
+            fileInput.click();
+        });
+
+        // ЛОГИКА: Загрузка в Storage
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file || !currentUser) return;
+
+            const storageRef = ref(storage, `users/${currentUser.uid}/${file.name}`);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            // Визуальный отклик
+            uploadBtn.disabled = true;
+            uploadBtn.innerText = "Загрузка...";
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    // Здесь можно добавить индикатор прогресса %
+                }, 
+                (error) => {
+                    console.error("Ошибка загрузки:", error);
+                    alert("Ошибка при загрузке файла");
+                    uploadBtn.disabled = false;
+                    uploadBtn.innerText = "Загрузить медиа";
+                }, 
+                () => {
+                    alert("Файл успешно загружен в ваше облако!");
+                    uploadBtn.disabled = false;
+                    uploadBtn.innerText = "Загрузить медиа";
+                }
+            );
+        });
+    </script>
+</body>
+</html>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <button id="loginSection" class="google-btn w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 hover:bg-btn-dark transition-all glow-on-hover flex items-center justify-center gap-2">
+        <span>Подключить Google</span>
+    </button>
+
+    <div id="userSection" class="hidden w-full py-2 px-4 rounded-xl border border-border-gray bg-btn-dark/30 flex items-center gap-3">
+        <img id="userAvatar" src="" alt="" class="w-10 h-10 rounded-full border border-border-gray">
+        <div class="text-left overflow-hidden">
+            <p id="userName" class="text-sm font-medium truncate"></p>
+            <p class="text-[10px] text-green-400 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span> В сети
+            </p>
+        </div>
+        <button id="logoutBtn" class="ml-auto p-2 text-text-muted hover:text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+        </button>
+    </div>
+
+    <button class="w-full py-3.5 px-6 rounded-xl border border-border-gray bg-btn-dark/50 hover:bg-btn-dark transition-all glow-on-hover">С компьютера</button>
+</div>
